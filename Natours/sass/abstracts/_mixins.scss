@@ -1,0 +1,65 @@
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin absCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/// MEDIA QUERY MANAGER
+/*
+0 - 600px:        Phone
+600 - 900px:      Tablet (portrait)
+600 - 900px:      Tablet (portrait)
+900 - 1200px:     Tablet (landscape)
+(1200 - 18000px): where our normal styles apply
+1800+px:          Big desktop
+
+@breakpoint argument choices:
+- phone
+- tabPort
+- tabLand
+- bigDesktop
+
+ORDER: Base, typography -> general layout, grid -> page layout -> components
+*/
+// In a media query, the font size is always set by whatever
+// is coming from the browser. Standard (desktop) is 16px = 1rem,
+// but the user can change it
+// em, not rem is used for media queries
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 37.5em) {
+      // 600px
+      @content;
+    }
+  }
+
+  @if $breakpoint == tabPort {
+    @media only screen and (max-width: 56.25em) {
+      // 900px
+      @content;
+    }
+  }
+
+  @if $breakpoint == tabLand {
+    @media only screen and (max-width: 75em) {
+      // 1200px
+      @content;
+    }
+  }
+
+  @if $breakpoint == bigDesktop {
+    @media only screen and (min-width: 112.5em) {
+      // 1800px
+      @content;
+    }
+  }
+}
